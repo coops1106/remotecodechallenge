@@ -1,5 +1,6 @@
 package services;
 
+import Util.TestDeviceUtil;
 import domain.Device;
 import org.junit.Test;
 
@@ -19,6 +20,8 @@ public class DeviceReaderTest {
 
     private final DeviceReader uut = new DeviceReader();
 
+    private final TestDeviceUtil testDeviceUtil = new TestDeviceUtil();
+
     @Test
     public void testReadDevicesFromFile() throws Exception {
         final List<Device> devices = uut.readDevices(new File(WORKING_DIR + FILE_SEPARATOR + PATH_TO_FILE));
@@ -27,30 +30,17 @@ public class DeviceReaderTest {
 
         final Map<String, String> expectedAttributes1 = new HashMap<>();
         expectedAttributes1.put("Screen Size", "128mm");
-        assertDeviceIsCorrect(devices.get(0), "Mockia", "5800", "CANDYBAR", expectedAttributes1);
+        testDeviceUtil.assertDeviceIsCorrect(devices.get(0), "Mockia", "5800", "CANDYBAR", expectedAttributes1);
 
         final Map<String, String> expectedAttributes2 = new HashMap<>();
         expectedAttributes2.put("Bluetooth","0.1");
         expectedAttributes2.put("Raspberry","Pi");
-        assertDeviceIsCorrect(devices.get(1), "Phony", "X11", "SMARTPHONE", expectedAttributes2);
+        testDeviceUtil.assertDeviceIsCorrect(devices.get(1), "Phony", "X11", "SMARTPHONE", expectedAttributes2);
 
         final Map<String, String> expectedAttributes3 = new HashMap<>();
         expectedAttributes3.put("Frequencies", "GSM,LTE,Kenneth");
         expectedAttributes3.put("Memory", "333Mb");
         expectedAttributes3.put("Teasmaid", "true");
-        assertDeviceIsCorrect(devices.get(2), "Samwrong", "Universe A1", "PHABLET", expectedAttributes3);
-    }
-
-    private void assertDeviceIsCorrect(final Device device,
-                                       final String expectedBrand,
-                                       final String expectedModel,
-                                       final String expectedFormFactor,
-                                       final Map<String, String> expectedAttributes) {
-        assertThat(device.getBrand(), is(expectedBrand));
-        assertThat(device.getModel(), is(expectedModel));
-        assertThat(device.getFormFactor(), is(expectedFormFactor));
-        for(final Map.Entry<String, String> keySet : expectedAttributes.entrySet()) {
-            assertThat(device.getAttribute(keySet.getKey()), is(keySet.getValue()));
-        }
+        testDeviceUtil.assertDeviceIsCorrect(devices.get(2), "Samwrong", "Universe A1", "PHABLET", expectedAttributes3);
     }
 }
