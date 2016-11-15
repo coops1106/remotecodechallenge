@@ -1,7 +1,6 @@
 package services;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -27,7 +26,7 @@ public class DeviceReader {
 
     private class DeviceDeserializer extends JsonDeserializer<Device> {
         @Override
-        public Device deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        public Device deserialize(final JsonParser jp, final DeserializationContext ctxt) throws IOException {
             JsonNode node = jp.getCodec().readTree(jp);
             final String brand = node.get("brand").asText();
             final String model = node.get("model").asText();

@@ -4,10 +4,10 @@ import domain.Device;
 import repository.exceptions.DeviceNotFoundException;
 import repository.exceptions.NonUniqueDeviceException;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class DeviceRepository {
 
@@ -36,22 +36,10 @@ public final class DeviceRepository {
     }
 
     public List<Device> getDevicesByBrand(final String brand) {
-        final List<Device> foundDevices = new ArrayList<>();
-        for (final Device device : devices) {
-            if (brand.equalsIgnoreCase(device.getBrand())) {
-                foundDevices.add(device);
-            }
-        }
-        return foundDevices;
+        return devices.stream().filter(device -> brand.equalsIgnoreCase(device.getBrand())).collect(Collectors.toList());
     }
 
     public List<Device> getDevicesByModel(final String model) {
-        final List<Device> foundDevices = new ArrayList<>();
-        for (final Device device : devices) {
-            if (model.equalsIgnoreCase(device.getModel())) {
-                foundDevices.add(device);
-            }
-        }
-        return foundDevices;
+        return devices.stream().filter(device -> model.equalsIgnoreCase(device.getModel())).collect(Collectors.toList());
     }
 }
