@@ -18,6 +18,9 @@ public class DeviceRepositoryTest {
     private static final String BRAND = "brand";
     private static final String MODEL = "model";
     private static final String FORM_FACTOR = "SMARTPHONE";
+    private static final String MODEL_2 = "model2";
+    private static final String BRAND_2 = "brand 2";
+    private static final String BRAND_3 = "brand 3";
 
     private DeviceRepository uut;
 
@@ -57,5 +60,24 @@ public class DeviceRepositoryTest {
         } catch (final NonUniqueDeviceException nude) {
             //pass
         }
+    }
+
+    @Test
+    public void testRetrieveDeviceByBrand() throws Exception {
+        uut.addDevice(new Device(BRAND, MODEL_2, Device.FormFactor.PHABLET));
+
+        final List<Device> devicesByBrand = uut.getDevicesByBrand(BRAND);
+
+        assertThat(devicesByBrand.size(), is(2));
+    }
+
+    @Test
+    public void testRetrieveDeviceByModel() throws Exception {
+        uut.addDevice(new Device(BRAND_2, MODEL, Device.FormFactor.CLAMSHELL));
+        uut.addDevice(new Device(BRAND_3, MODEL, Device.FormFactor.SMARTPHONE));
+
+        final List<Device> devicesByBrand = uut.getDevicesByModel(MODEL);
+
+        assertThat(devicesByBrand.size(), is(3));
     }
 }
