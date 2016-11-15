@@ -3,6 +3,8 @@ package repository;
 import domain.Device;
 import org.junit.Before;
 import org.junit.Test;
+import repository.exceptions.DeviceNotFoundException;
+import repository.exceptions.NonUniqueDeviceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class DeviceRepositoryTest {
 
     private static final String BRAND = "brand";
     private static final String MODEL = "model";
-    private static final String FORM_FACTOR = "formFactor";
+    private static final String FORM_FACTOR = "SMARTPHONE";
 
     private DeviceRepository uut;
 
@@ -43,6 +45,16 @@ public class DeviceRepositoryTest {
             uut.getDeviceByBrandAndModel("");
             fail();
         } catch (final DeviceNotFoundException dnfe) {
+            //pass
+        }
+    }
+
+    @Test
+    public void testUnableToAddNonUniqueDevice() throws Exception {
+        try {
+            uut.addDevice(new Device(BRAND, MODEL, FORM_FACTOR));
+            fail();
+        } catch (final NonUniqueDeviceException nude) {
             //pass
         }
     }

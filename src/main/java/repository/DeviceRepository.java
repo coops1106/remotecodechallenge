@@ -1,6 +1,8 @@
 package repository;
 
 import domain.Device;
+import repository.exceptions.DeviceNotFoundException;
+import repository.exceptions.NonUniqueDeviceException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +13,9 @@ public final class DeviceRepository {
     private final Set<Device> devices = new HashSet<>();
 
     public void addDevice(final Device device) {
+        if (devices.contains(device)) {
+            throw new NonUniqueDeviceException();
+        }
         devices.add(device);
     }
 

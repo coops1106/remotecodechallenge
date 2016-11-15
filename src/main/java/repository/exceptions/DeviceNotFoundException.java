@@ -1,4 +1,4 @@
-package repository;
+package repository.exceptions;
 
 public class DeviceNotFoundException extends RuntimeException {
 
